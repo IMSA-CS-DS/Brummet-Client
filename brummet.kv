@@ -1,0 +1,82 @@
+<Login>:
+    BoxLayout
+        id: login_layout
+        orientation: 'vertical'
+        padding: [10,10,10,10]
+        spacing: 10
+
+        BoxLayout:
+            orientation:'vertical'
+            padding: [0,0,0,0]
+            spacing: 0
+
+            Label:
+                id: title
+                text: 'Brummet Client'
+                halign: 'center'
+                valign: 'middle'
+                font_size: 24
+
+            Label:
+                text: 'Please log in with IMSA SLURM credentials'
+                halign: 'center'
+                valign: 'middle'
+                spacing: -20
+                font_size: 24
+
+        BoxLayout:
+            orientation: 'vertical'
+
+            Label:
+                text: 'Username'
+                font_size: 18
+                halign: 'left'
+                text_size: root.width-20, 0
+
+            TextInput:
+                id: username
+                multiline: False
+                font_size: 16
+                write_tab: False
+
+        BoxLayout:
+            orientation: 'vertical'
+            Label:
+                text: 'Password'
+                halign: 'left'
+                font_size: 18
+                text_size: root.width-20, 0
+
+            TextInput:
+                id: password
+                multiline: False
+                password: True
+                font_size: 16
+                write_tab: False
+
+        Button:
+            text: 'Log In'
+            font_size: 24
+
+            on_press: 
+                root.manager.current = 'connecting'
+                root.do_login(username.text, password.text)
+
+<Connect>:
+    BoxLayout:
+        orientation: 'vertical'
+        padding: [0,125,0,125]
+        spacing: 0
+
+        Label:
+            text:'Logging In'
+            font_size: 24
+            halign: 'center'
+            valign: 'middle'
+
+        Label:
+            id: status
+            test:''
+            font_size: 16
+            halign: 'center'
+            valign: 'middle'

@@ -13,9 +13,6 @@ import csv
 import paramiko
 #import os
 
-global username
-global password
-
 def load_csv(filepath):
     with open(filepath, newline='') as csvfile:
         file_array = list(csv.reader(csvfile))
@@ -24,7 +21,7 @@ def load_csv(filepath):
 
 class Connect(Screen):
     Window.size = (600, 300)
-    def routine(self):
+    def routine(self, username, password):
 
         host = 'titanrobotics.ddns.net'
         port = 60022
@@ -37,10 +34,10 @@ class Connect(Screen):
         try:
             self.ids.status.text = "attempting to connect to " + host
             ssh.connect(host, port, username, password)
-            yield ssh
+            #yield ssh
             self.ids.status.text = "connected to " + host
 
-        finally:
+        except:
             ssh.close()
             self.ids.status.text = "connection failed"
 
@@ -57,6 +54,8 @@ class Login(Screen):
 
         self.manager.transition = SlideTransition(direction = "left")
         self.manager.current = "connect"
+
+        self.manager.get_screen('connect').routine(username, password)
 
     def resetForm(self):
         self.ids['login'].text = ""

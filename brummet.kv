@@ -58,11 +58,12 @@
             text: 'Log In'
             font_size: 24
 
-            on_press: 
-                root.manager.current = 'connecting'
+            on_press:
                 root.do_login(username.text, password.text)
 
 <Connect>:
+    on_enter:
+        root.routine()
     BoxLayout:
         orientation: 'vertical'
         padding: [0,125,0,125]

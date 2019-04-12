@@ -13,6 +13,9 @@ import csv
 import paramiko
 #import os
 
+global username
+global password
+
 def load_csv(filepath):
     with open(filepath, newline='') as csvfile:
         file_array = list(csv.reader(csvfile))
@@ -21,8 +24,7 @@ def load_csv(filepath):
 
 class Connect(Screen):
     Window.size = (600, 300)
-    #self.manager.get_screen('connecting')
-    def on_enter(self, username, password):
+    def routine(self):
 
         host = 'titanrobotics.ddns.net'
         port = 60022
@@ -53,10 +55,8 @@ class Login(Screen):
         username = loginText
         password = passwordText
 
-        #print(username, password)
-        #self.manager.get_screen('connecting').loginroutine(username, password)
-        #self.manager.current_screen.loginroutine(username, password)
-        #print("here")
+        self.manager.transition = SlideTransition(direction = "left")
+        self.manager.current = "connect"
 
     def resetForm(self):
         self.ids['login'].text = ""
@@ -72,7 +72,7 @@ class BrummetApp(App):
         manager = ScreenManager()
 
         manager.add_widget(Login(name = 'login'))
-        manager.add_widget(Connect(name = 'connecting'))
+        manager.add_widget(Connect(name = 'connect'))
 
         return manager
 

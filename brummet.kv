@@ -6,9 +6,8 @@
         spacing: 10
 
         BoxLayout:
+            spacing: 10
             orientation:'vertical'
-            padding: [0,0,0,0]
-            spacing: 0
 
             Label:
                 id: title
@@ -21,45 +20,77 @@
                 text: 'Please log in with IMSA SLURM credentials'
                 halign: 'center'
                 valign: 'middle'
-                spacing: -20
-                font_size: 24
+                font_size: 20
 
         BoxLayout:
-            orientation: 'vertical'
-
+            orientation: 'horizontal'
             Label:
+                size_hint: (0.15, 1)
                 text: 'Username'
                 font_size: 18
                 halign: 'left'
-                text_size: root.width-20, 0
 
             TextInput:
+                size_hint: (0.7, 1)
                 id: username
                 multiline: False
-                font_size: 16
+                font_size: 18
                 write_tab: False
 
         BoxLayout:
-            orientation: 'vertical'
+            orientation: 'horizontal'
             Label:
+                size_hint: (0.15, 1)
                 text: 'Password'
                 halign: 'left'
                 font_size: 18
-                text_size: root.width-20, 0
 
             TextInput:
+                size_hint: (0.7, 1)
                 id: password
                 multiline: False
                 password: True
-                font_size: 16
+                font_size: 18
+                write_tab: False
+
+        BoxLayout:
+            orientation: 'horizontal'
+            Label:
+                size_hint: (0.15, 1)
+                text: 'Host'
+                halign: 'left'
+                font_size: 18
+
+            TextInput:
+                size_hint: (0.7, 1)
+                hint_text: 'slurm.imsa.edu'
+                id: host
+                multiline: False
+                font_size: 18
+                write_tab: False
+
+        BoxLayout:
+            orientation: 'horizontal'
+            Label:
+                size_hint: (0.15, 1)
+                text: 'Port'
+                halign: 'left'
+                font_size: 18
+
+            TextInput:
+                size_hint: (0.7, 1)
+                hint_text: '22'
+                id: port
+                multiline: False
+                font_size: 18
                 write_tab: False
 
         Button:
             text: 'Log In'
             font_size: 24
-
+            id: submit
             on_press:
-                root.do_login(username.text, password.text)
+                root.do_login(username.text, password.text, host.text, port.text)
 
 <Connect>:
     BoxLayout:
@@ -76,6 +107,9 @@
         Label:
             id: status
             test:''
-            font_size: 16
+            font_size: 12
             halign: 'center'
             valign: 'middle'
+            text_size: self.size
+            size_hint: 1,1
+            shorten: True

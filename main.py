@@ -6,7 +6,7 @@
 __author__ = ("Arthur Lu <alu1@imsa.edu>", "Jacob Levine <jlevine@imsa.edu>")
 
 from kivy.config import Config
-Config.set('graphics', 'resizable', False)
+#Config.set('graphics', 'resizable', False)
 
 from kivy.app import App
 
@@ -16,8 +16,11 @@ from kivy.core.window import Window
 
 from kivy.uix.screenmanager import ScreenManager, Screen, SlideTransition, NoTransition
 
+from kivy.clock import Clock
+
 import csv
 import paramiko
+import time
 #import os
 
 def load_csv(filepath):
@@ -26,8 +29,12 @@ def load_csv(filepath):
         csvfile.close() 
     return file_array
 
+class Client(Screen):
+	Window.size = (1280, 720)
+
 class Connect(Screen):
-    Window.size = (600, 350)
+    Window.size = (600, 300)
+
     def routine(self, host, port, username, password):
 
         #print(username, password)
@@ -50,10 +57,17 @@ class Connect(Screen):
         except Exception as e:
             ssh.close()
             self.ids.status.text = "connection failed: " + str(e)
+            Clock.schedule_once(self.return_to_login, 2.5)
+            #self.manager.current = 'login'
+
+    def return_to_login(self, *args):
+    	self.manager.transition = SlideTransition(direction = "right")
+    	self.manager.current = 'login'
+            #time.sleep(5)
+            
 
 class Login(Screen):
     Window.size = (600, 300)
-
     def do_login(self, loginText, passwordText, hostText, portText):
         app = App.get_running_app()
 
@@ -77,17 +91,45 @@ class Login(Screen):
         self.ids['login'].text = ""
         self.ids['password'].text = ""
 
+target_x = 600
+target_y = 300
+
+manager = ScreenManager()
+
 class BrummetApp(App):
+
     username = StringProperty(None)
     password = StringProperty(None)
 
+    
+
     title = 'Brummet Client v ' + load_csv("data/meta")[0][1]
 
+    def check_resize(self, instance, x, y):
+        # resize X
+        if manager.current != "client":
+
+            if x >  target_x:
+                Window.size = (target_x, Window.size[1])
+
+            if y > target_y:
+                Window.size = (Window.size[0], target_y)
+
+            if x <  target_x:
+                Window.size = (target_x, Window.size[1])
+
+            if y < target_y:
+                Window.size = (Window.size[0], target_y)
+
     def build(self):
+
+        Window.bind(on_resize=self.check_resize)
+
         manager = ScreenManager()
 
         manager.add_widget(Login(name = 'login'))
         manager.add_widget(Connect(name = 'connect'))
+        manager.add_widget(Client(name = 'client'))
 
         return manager
 

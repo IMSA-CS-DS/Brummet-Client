@@ -33,11 +33,12 @@ class Client(Screen):
 
     def on_pre_enter(self, *args):
         Window.size = (1280, 720)
-
+        Window.top = 100
+        Window.left = 100
 
     def client(self, ssh, sftp):
 
-        print("test")
+        pass
 
 class Connect(Screen):
     def on_pre_enter(self, *args):
@@ -89,6 +90,7 @@ class Connect(Screen):
             
 
 class Login(Screen):
+
     def on_pre_enter(self, *args):
         Window.size = (600, 300)
 
@@ -124,8 +126,6 @@ class BrummetApp(App):
 
     username = StringProperty(None)
     password = StringProperty(None)
-
-    screenName = StringProperty(None)
 
     title = 'Brummet Client v ' + load_csv("data/meta")[0][1]
 

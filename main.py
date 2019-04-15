@@ -31,14 +31,17 @@ def load_csv(filepath):
 
 class Client(Screen):
 
-    Window.size = (1280, 720)
+    def on_pre_enter(self, *args):
+        Window.size = (1280, 720)
+
 
     def client(self, ssh, sftp):
 
         print("test")
 
 class Connect(Screen):
-    Window.size = (600, 300)
+    def on_pre_enter(self, *args):
+        Window.size = (600, 300)
 
     def routine(self, host, port, username, password):
 
@@ -86,7 +89,9 @@ class Connect(Screen):
             
 
 class Login(Screen):
-    Window.size = (600, 300)
+    def on_pre_enter(self, *args):
+        Window.size = (600, 300)
+
     def do_login(self, loginText, passwordText, hostText, portText):
         app = App.get_running_app()
 

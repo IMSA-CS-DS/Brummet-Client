@@ -30,18 +30,23 @@ def load_csv(filepath):
     return file_array
 
 class Client(Screen):
+
     Window.size = (1280, 720)
+
+    def client(self, ssh, sftp):
+
+        print("test")
 
 class Connect(Screen):
     Window.size = (600, 300)
 
     def routine(self, host, port, username, password):
 
-        #print(username, password)
-        self.ids.status.text = "connecting"
-               
         ssh = None
         sftp = None
+
+        #print(username, password)
+        self.ids.status.text = "connecting"
 
         try:
             self.ids.status.text = "attempting to connect to " + host + ":" + str(port)
@@ -56,6 +61,8 @@ class Connect(Screen):
             self.ids.status.text = "connected to " + host + ":" + str(port)
 
             Clock.schedule_once(self.continue_to_client, 2)
+            self.manager.get_screen('client').client(ssh, sftp)
+            
 
         except Exception as e:
             if sftp is not None:
@@ -73,6 +80,7 @@ class Connect(Screen):
             #time.sleep(5)
 
     def continue_to_client(self, *args):
+
         self.manager.transition = NoTransition()
         self.manager.current = 'client'
             

@@ -118,8 +118,8 @@ class BrummetApp(App):
 
     def check_resize(self, instance, x, y):
         # resize X
-        screenName = manager.current
-        print(screenName)
+        #screenName = manager.current
+        #print(screenName)
         if manager.current != "client":
 
             if x >  target_x:
@@ -136,18 +136,9 @@ class BrummetApp(App):
 
     def build(self):
 
-        manager = ScreenManager()
-        loginScr = Screen(name = 'login')
-        loginScr.add_widget(Login())
-        manager.add_widget(loginScr)
-
-        connectScr = Screen(name = 'connect')
-        connectScr.add_widget(Connect())
-        manager.add_widget(connectScr)
-
-        clientScr = Screen(name = 'client')
-        clientScr.add_widget(Client())
-        manager.add_widget(clientScr)
+        manager.add_widget(Login(name = 'login'))
+        manager.add_widget(Connect(name = 'connect'))
+        manager.add_widget(Client(name = 'client'))
 
         Window.bind(on_resize=self.check_resize)
 

@@ -121,7 +121,12 @@
         orientation: 'horizontal'
         padding: [5, 5, 5, 5]
         spacing: 5
-        Button:
+        GridLayout:
             size_hint: (0.2, 1)
+            row_default_height: self.height / 10
+            row_force_default: True
+            cols: 1
+            Button:
+            Button:
         Button:
             size_hint: (0.8, 1)

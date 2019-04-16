@@ -38,17 +38,14 @@ class Client(Screen):
 
     def client(self, ssh, sftp):
 
-    	projects = sftp.listdir('.')
+        self.ssh = ssh
+        self.sftp = sftp
 
-    	for row in projects:
-    		if row[0] != ".":
-    		    print (row)
+        Clock.schedule_interval(self.auto, 1)
 
-        #Clock.schedule_interval(auto(ssh, sftp), 0.1)
+    def auto(self, dt):
 
-    def auto(self, ssh, sftp):
-
-    	pass
+        projects = self.sftp.listdir('.')
 
 class Connect(Screen):
     def on_pre_enter(self, *args):

@@ -41,6 +41,8 @@ class Client(Screen):
         self.ssh = ssh
         self.sftp = sftp
 
+        self.ssh.chdir('brummet_projects')
+
         Clock.schedule_interval(self.auto, 1)
 
     def auto(self, dt):
@@ -105,9 +107,9 @@ class Login(Screen):
         app = App.get_running_app()
 
         if hostText == "":
-            hostText = "slurm.imsa.edu"
+            hostText = "titanrobotics.ddns.net"
         if portText == "":
-            portText = "22"
+            portText = "60022"
 
         host = hostText
         port = int(portText)
@@ -156,8 +158,8 @@ class BrummetApp(App):
 
     def build(self):
 
-        manager.add_widget(Login(name = 'login'))
-        manager.add_widget(Connect(name = 'connect'))
+        #manager.add_widget(Login(name = 'login'))
+        #manager.add_widget(Connect(name = 'connect'))
         manager.add_widget(Client(name = 'client'))
 
         Window.bind(on_resize=self.check_resize)

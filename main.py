@@ -156,6 +156,17 @@ class BrummetApp(App):
             if y < target_y:
                 Window.size = (Window.size[0], target_y)
 
+        if manager.current == "client":
+
+            target_x = 1280
+            target_y = 720
+
+            if x <  target_x:
+                Window.size = (target_x, Window.size[1])
+
+            if y < target_y:
+                Window.size = (Window.size[0], target_y)
+
     def build(self):
 
         #manager.add_widget(Login(name = 'login'))

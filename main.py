@@ -73,7 +73,7 @@ class Connect(Screen):
 
             self.ids.status.text = "connected to " + host + ":" + str(port)
 
-            Clock.schedule_once(self.continue_to_client, 2)
+            Clock.schedule_once(self.continue_to_client, 0.1)
             self.manager.get_screen('client').client(ssh, sftp)
             
 
@@ -84,7 +84,7 @@ class Connect(Screen):
                 ssh.close()
 
             self.ids.status.text = "connection failed: " + str(e)
-            Clock.schedule_once(self.return_to_login, 2)
+            Clock.schedule_once(self.return_to_login, 4)
             #self.manager.current = 'login'
 
     def return_to_login(self, *args):

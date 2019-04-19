@@ -41,7 +41,7 @@ class Client(Screen):
         self.ssh = ssh
         self.sftp = sftp
 
-        self.ssh.chdir('brummet_projects')
+        self.sftp.chdir('brummet_projects')
 
         Clock.schedule_interval(self.auto, 1)
 
@@ -49,67 +49,15 @@ class Client(Screen):
 
         projects = self.sftp.listdir('.')
 
+        for file in projects:
+
+            if file[0] == ".":
+
+         	   projects.remove(file)
+
         list_view = self.ids.list_files
 
         print(projects)
-        
-        for file in projects:
-
-            list_view.add_widget("""
-                Button:
-                        background_color: 0,0,0,0
-                        Image:
-                            source:'data\customui\client_file_bar.png'
-                            x: self.parent.x
-                            y: self.parent.y
-                            width: self.parent.width
-                            height: self.parent.height
-                            allow_stretch: True
-                            keep_ratio: False
-
-                        Image:
-                            source:'data\customui\python.png'
-                            y: self.parent.y + 10
-                            x: - self.parent.width/2 + 25
-                            width: self.parent.width - 20
-                            height: self.parent.height - 20
-
-                        Label:
-                            size_hint:(0.9, 1)
-                            text: "hello there"
-                            y: self.parent.y
-                            x: self.parent.x + self.parent.width*0.05
-                            width: self.parent.width
-                            height: self.parent.height
-                            text_size: self.size
-                            font_size: self.height - 30
-                            halign: 'left'
-                            valign: 'middle'
-
-                        Label:
-                            size_hint:(0.9, 1)
-                            text: "no u"
-                            y: self.parent.y
-                            x: self.parent.x + self.parent.width*0.7
-                            width: self.parent.width
-                            height: self.parent.height
-                            text_size: self.size
-                            font_size: self.height - 30
-                            halign: 'left'
-                            valign: 'middle'
-
-                        Label:
-                            size_hint:(0.9, 1)
-                            text: "dong big dumb"
-                            y: self.parent.y
-                            x: self.parent.x + self.parent.width*0.8
-                            width: self.parent.width
-                            height: self.parent.height
-                            text_size: self.size
-                            font_size: self.height - 30
-                            halign: 'left'
-                            valign: 'middle'
-                """)
 
 class Connect(Screen):
     def on_pre_enter(self, *args):
@@ -158,7 +106,6 @@ class Connect(Screen):
 
         self.manager.transition = NoTransition()
         self.manager.current = 'client'
-            
 
 class Login(Screen):
 

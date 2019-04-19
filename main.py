@@ -15,6 +15,11 @@ from kivy.properties import StringProperty, ObjectProperty
 from kivy.core.window import Window
 
 from kivy.uix.screenmanager import ScreenManager, Screen, SlideTransition, NoTransition
+from kivy.uix.button import Button
+from kivy.uix.image import Image
+from kivy.uix.label import Label
+
+from kivy.lang.builder import Builder
 
 from kivy.clock import Clock
 
@@ -53,11 +58,70 @@ class Client(Screen):
 
             if file[0] == ".":
 
-         	   projects.remove(file)
+                projects.remove(file)
 
         list_view = self.ids.list_files
 
+        """
+        Button:
+            background_color: 0,0,0,0
+            Image:
+                source:'data\customui\client_file_bar.png'
+                x: self.parent.x
+                y: self.parent.y
+                width: self.parent.width
+                height: self.parent.height
+                allow_stretch: True
+                keep_ratio: False
+
+            Image:
+                source:'data\customui\python.png'
+                y: self.parent.y + 10
+                x: - self.parent.width/2 + 25
+                width: self.parent.width - 20
+                height: self.parent.height - 20
+
+            Label:
+                size_hint:(0.9, 1)
+                text: "hello there"
+                y: self.parent.y
+                x: self.parent.x + self.parent.width*0.05
+                width: self.parent.width
+                height: self.parent.height
+                text_size: self.size
+                font_size: self.height - 30
+                halign: 'left'
+                valign: 'middle'
+
+            Label:
+                size_hint:(0.9, 1)
+                text: "no u"
+                y: self.parent.y
+                x: self.parent.x + self.parent.width*0.7
+                width: self.parent.width
+                height: self.parent.height
+                text_size: self.size
+                font_size: self.height - 30
+                halign: 'left'
+                valign: 'middle'
+
+            Label:
+                size_hint:(0.9, 1)
+                text: "dong big dumb"
+                y: self.parent.y
+                x: self.parent.x + self.parent.width*0.8
+                width: self.parent.width
+                height: self.parent.height
+                text_size: self.size
+                font_size: self.height - 30
+                halign: 'left'
+                valign: 'middle'
+        """
+
         print(projects)
+
+        #for file in projects:
+        #    list_view.add_widget(template)
 
 class Connect(Screen):
     def on_pre_enter(self, *args):

@@ -118,7 +118,14 @@ class Client(Screen):
                 valign: 'middle'
         """
 
-        template = Builder.load_string("""
+        
+        print(projects)
+
+        list_view.clear_widgets()
+
+        for file in projects:
+
+            template = Builder.load_string("""
 Button:
     background_color: 0,0,0,0
     Image:
@@ -139,6 +146,7 @@ Button:
 
     Label:
         size_hint:(0.9, 1)
+        id: filename
         text: "hello there"
         y: self.parent.y
         x: self.parent.x + self.parent.width*0.05
@@ -172,12 +180,14 @@ Button:
         font_size: self.height - 30
         halign: 'left'
         valign: 'middle'
-        	""")
+    on_press:
+        root.changedir(filename.text)
+            """)
 
-        print(projects)
-
-        for file in projects:
             list_view.add_widget(template)
+
+    def changedir(self, path):
+    	print(path)
 
 class Connect(Screen):
     def on_pre_enter(self, *args):

@@ -50,6 +50,9 @@ class Client(Screen):
 
         Clock.schedule_interval(self.auto, 1)
 
+    def changedir(self, path):
+        print(path)
+
     def auto(self, dt):
 
         projects = self.sftp.listdir('.')
@@ -61,63 +64,6 @@ class Client(Screen):
                 projects.remove(file)
 
         list_view = self.ids.list_files
-
-        """
-        Button:
-            background_color: 0,0,0,0
-            Image:
-                source:'data\customui\client_file_bar.png'
-                x: self.parent.x
-                y: self.parent.y
-                width: self.parent.width
-                height: self.parent.height
-                allow_stretch: True
-                keep_ratio: False
-
-            Image:
-                source:'data\customui\python.png'
-                y: self.parent.y + 10
-                x: - self.parent.width/2 + 25
-                width: self.parent.width - 20
-                height: self.parent.height - 20
-
-            Label:
-                size_hint:(0.9, 1)
-                text: "hello there"
-                y: self.parent.y
-                x: self.parent.x + self.parent.width*0.05
-                width: self.parent.width
-                height: self.parent.height
-                text_size: self.size
-                font_size: self.height - 30
-                halign: 'left'
-                valign: 'middle'
-
-            Label:
-                size_hint:(0.9, 1)
-                text: "no u"
-                y: self.parent.y
-                x: self.parent.x + self.parent.width*0.7
-                width: self.parent.width
-                height: self.parent.height
-                text_size: self.size
-                font_size: self.height - 30
-                halign: 'left'
-                valign: 'middle'
-
-            Label:
-                size_hint:(0.9, 1)
-                text: "dong big dumb"
-                y: self.parent.y
-                x: self.parent.x + self.parent.width*0.8
-                width: self.parent.width
-                height: self.parent.height
-                text_size: self.size
-                font_size: self.height - 30
-                halign: 'left'
-                valign: 'middle'
-        """
-
         
         print(projects)
 
@@ -125,69 +71,7 @@ class Client(Screen):
 
         for file in projects:
 
-            template = Builder.load_string("""
-Button:
-    background_color: 0,0,0,0
-    Image:
-        source:'data\customui\client_file_bar.png'
-        x: self.parent.x
-        y: self.parent.y
-        width: self.parent.width
-        height: self.parent.height
-        allow_stretch: True
-        keep_ratio: False
-
-    Image:
-        source:'data\customui\python.png'
-        y: self.parent.y + 10
-        x: - self.parent.width/2 + 25
-        width: self.parent.width - 20
-        height: self.parent.height - 20
-
-    Label:
-        size_hint:(0.9, 1)
-        id: filename
-        text: "hello there"
-        y: self.parent.y
-        x: self.parent.x + self.parent.width*0.05
-        width: self.parent.width
-        height: self.parent.height
-        text_size: self.size
-        font_size: self.height - 30
-        halign: 'left'
-        valign: 'middle'
-
-    Label:
-        size_hint:(0.9, 1)
-        text: "no u"
-        y: self.parent.y
-        x: self.parent.x + self.parent.width*0.7
-        width: self.parent.width
-        height: self.parent.height
-        text_size: self.size
-        font_size: self.height - 30
-        halign: 'left'
-        valign: 'middle'
-
-    Label:
-        size_hint:(0.9, 1)
-        text: "dong big dumb"
-        y: self.parent.y
-        x: self.parent.x + self.parent.width*0.8
-        width: self.parent.width
-        height: self.parent.height
-        text_size: self.size
-        font_size: self.height - 30
-        halign: 'left'
-        valign: 'middle'
-    on_press:
-        root.changedir(filename.text)
-            """)
-
-            list_view.add_widget(template)
-
-    def changedir(self, path):
-    	print(path)
+            list_view.add_widget(Builder.load_file("template.kv"))
 
 class Connect(Screen):
     def on_pre_enter(self, *args):
@@ -266,7 +150,7 @@ class Login(Screen):
         self.ids['password'].text = ""
 
 
-manager = ScreenManager()
+manager  = ScreenManager()
 
 class BrummetApp(App):
 

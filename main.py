@@ -26,6 +26,7 @@ from kivy.clock import Clock
 import csv
 import paramiko
 import time
+from datetime import datetime
 #import os
 
 def load_csv(filepath):
@@ -33,6 +34,12 @@ def load_csv(filepath):
         file_array = list(csv.reader(csvfile))
         csvfile.close() 
     return file_array
+
+class FileTemplate(Button):
+
+    def changedir(self, path):
+
+        print(path)
 
 class Client(Screen):
 
@@ -50,9 +57,6 @@ class Client(Screen):
 
         Clock.schedule_interval(self.auto, 1)
 
-    def changedir(self, path):
-        print(path)
-
     def auto(self, dt):
 
         projects = self.sftp.listdir('.')
@@ -65,13 +69,23 @@ class Client(Screen):
 
         list_view = self.ids.list_files
         
-        print(projects)
+       #print(projects)
 
         list_view.clear_widgets()
 
         for file in projects:
 
-            list_view.add_widget(Builder.load_file("template.kv"))
+            template = FileTemplate()
+
+            parse = file.split(",")
+
+            template.ids.filename.text = parse[1]
+            template.ids.filetype.text = parse[0]
+            template.ids.fileimage.source = "data\customui\\" + parse[0] + ".png"
+            #print(datetime.fromtimestamp(self.sftp.lstat(file).st_atime))
+            template.ids.filetime.text = str(datetime.fromtimestamp(self.sftp.lstat(file).st_mtime))
+
+            list_view.add_widget(template)
 
 class Connect(Screen):
     def on_pre_enter(self, *args):
@@ -127,7 +141,6 @@ class Login(Screen):
         Window.size = (600, 300)
 
     def do_login(self, loginText, passwordText, hostText, portText):
-        app = App.get_running_app()
 
         if hostText == "":
             hostText = "titanrobotics.ddns.net"

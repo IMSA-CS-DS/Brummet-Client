@@ -27,7 +27,6 @@ import csv
 import paramiko
 import time
 from datetime import datetime
-#import os
 
 def load_csv(filepath):
     with open(filepath, newline='') as csvfile:
@@ -68,10 +67,10 @@ class Client(Screen):
                 projects.remove(file)
 
         list_view = self.ids.list_files
-        
-       #print(projects)
 
         list_view.clear_widgets()
+
+        self.ids.dirname.text = self.sftp.getcwd().split("/")[-1]
 
         for file in projects:
 
@@ -82,7 +81,6 @@ class Client(Screen):
             template.ids.filename.text = parse[1]
             template.ids.filetype.text = parse[0]
             template.ids.fileimage.source = "data\customui\\" + parse[0] + ".png"
-            #print(datetime.fromtimestamp(self.sftp.lstat(file).st_atime))
             template.ids.filetime.text = str(datetime.fromtimestamp(self.sftp.lstat(file).st_mtime))
 
             list_view.add_widget(template)

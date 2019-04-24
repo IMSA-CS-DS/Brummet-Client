@@ -210,6 +210,59 @@
                     font_size: self.height - 10
                     halign: 'left'
                     valign: 'middle'
+            Button:
+                background_color: 0,0,0,0
+                size: (self.parent.width, 50)
+                size_hint:(None, None)
+                background_color: 0,0,0,0
+                on_press:
+                    root.cddotdot()
+                Image:
+                    source:'data\customui\\back.png'
+                    id: fileimage
+                    y: self.parent.y + 10
+                    x: self.parent.x - self.parent.width/2 + 20
+                    width: self.parent.width - 20
+                    height: self.parent.height - 20
+
+                Label:
+                    size_hint:(0.9, 1)
+                    id: filename
+                    text: ".."
+                    y: self.parent.y
+                    x: self.parent.x + self.parent.width*0.05
+                    width: self.parent.width
+                    height: self.parent.height
+                    text_size: self.size
+                    font_size: self.height - 30
+                    halign: 'left'
+                    valign: 'middle'
+
+                Label:
+                    size_hint:(0.9, 1)
+                    id: filetype
+                    text: ""
+                    y: self.parent.y
+                    x: self.parent.x + self.parent.width*0.7
+                    width: self.parent.width
+                    height: self.parent.height
+                    text_size: self.size
+                    font_size: self.height - 30
+                    halign: 'left'
+                    valign: 'middle'
+
+                Label:
+                    size_hint:(0.9, 1)
+                    id: filetime
+                    text: ""
+                    y: self.parent.y
+                    x: self.parent.x + self.parent.width*0.8
+                    width: self.parent.width
+                    height: self.parent.height
+                    text_size: self.size
+                    font_size: self.height - 30
+                    halign: 'left'
+                    valign: 'middle'
 
             Button:
                 x: 0
@@ -220,7 +273,7 @@
 
                 Label:
                     size_hint:(0.9, 1)
-                    
+                    id: labeltext
                     text: "Project Name"
                     y: self.parent.y
                     x: self.parent.x + self.parent.width*0
@@ -263,3 +316,4 @@
                     height: self.minimum_height
                     row_default_height:50
                     cols:1
+                    

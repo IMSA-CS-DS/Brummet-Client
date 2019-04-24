@@ -25,7 +25,7 @@ from kivy.clock import Clock
 
 import csv
 import paramiko
-import time
+#import time
 from datetime import datetime
 
 def load_csv(filepath):
@@ -36,9 +36,11 @@ def load_csv(filepath):
 
 class FileTemplate(Button):
 
+    sftp = None
+
     def changedir(self, path):
 
-        print(path)
+        self.sftp.chdir(path)
 
 class Client(Screen):
 
@@ -70,11 +72,20 @@ class Client(Screen):
 
         list_view.clear_widgets()
 
-        self.ids.dirname.text = self.sftp.getcwd().split("/")[-1]
+        if self.sftp.getcwd().split("/")[-1].split(",")[-1] == "brummet_projects":
+
+            self.ids.dirname.text = "Projects"
+            self.ids.labeltext.text = "Project Name"
+
+        else:
+
+            self.ids.dirname.text = self.sftp.getcwd().split("/")[-1].split(",")[-1]
+            self.ids.labeltext.text = "File Name"
 
         for file in projects:
 
             template = FileTemplate()
+            template.sftp = self.sftp
 
             parse = file.split(",")
 
@@ -84,6 +95,12 @@ class Client(Screen):
             template.ids.filetime.text = str(datetime.fromtimestamp(self.sftp.lstat(file).st_mtime))
 
             list_view.add_widget(template)
+
+    def cddotdot(self):
+
+    	if not self.sftp.getcwd().split("/")[-1].split(",")[-1] == "brummet_projects":
+
+    		self.sftp.chdir("..")
 
 class Connect(Screen):
     def on_pre_enter(self, *args):

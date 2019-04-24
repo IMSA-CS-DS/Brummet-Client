@@ -46,9 +46,7 @@ class FileTemplate(Button):
 
         except:
 
-            print("file")
-
-            self.sftp.file(path.split(",")[-1], mode = 'w+')
+            file = self.sftp.file(path.split(",")[-1], mode = 'w+')
 
 class Client(Screen):
 

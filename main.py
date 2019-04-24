@@ -40,7 +40,15 @@ class FileTemplate(Button):
 
     def changedir(self, path):
 
-        self.sftp.chdir(path)
+        try:
+
+            self.sftp.chdir(path)
+
+        except:
+
+            print("file")
+
+            self.sftp.file(path.split(",")[-1], mode = 'w+')
 
 class Client(Screen):
 
@@ -86,21 +94,25 @@ class Client(Screen):
 
             template = FileTemplate()
             template.sftp = self.sftp
-
-            parse = file.split(",")
-
-            template.ids.filename.text = parse[1]
-            template.ids.filetype.text = parse[0]
-            template.ids.fileimage.source = "data\customui\\" + parse[0] + ".png"
-            template.ids.filetime.text = str(datetime.fromtimestamp(self.sftp.lstat(file).st_mtime))
+            try:
+                parse = file.split(",")
+                template.ids.filename.text = parse[1]
+                template.ids.filetype.text = parse[0]
+                template.ids.fileimage.source = "data\customui\\" + parse[0] + ".png"
+                template.ids.filetime.text = str(datetime.fromtimestamp(self.sftp.lstat(file).st_mtime))
+            except:
+                template.ids.filename.text = file
+                template.ids.filetype.text = ""
+                template.ids.fileimage.source = ""
+                template.ids.filetime.text = str(datetime.fromtimestamp(self.sftp.lstat(file).st_mtime))
 
             list_view.add_widget(template)
 
     def cddotdot(self):
 
-    	if not self.sftp.getcwd().split("/")[-1].split(",")[-1] == "brummet_projects":
+        if not self.sftp.getcwd().split("/")[-1].split(",")[-1] == "brummet_projects":
 
-    		self.sftp.chdir("..")
+            self.sftp.chdir("..")
 
 class Connect(Screen):
     def on_pre_enter(self, *args):

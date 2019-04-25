@@ -1,2 +1,2 @@
-python -m PyInstaller --name brummet main.py
-python -m PyInstaller brummet.spec
+python -m PyInstaller --name brummet main.py -y
+python -m PyInstaller brummet.spec -y

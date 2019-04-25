@@ -25,10 +25,15 @@ from kivy.clock import Clock
 
 import csv
 import paramiko
-#import time
-from datetime import datetime
+from datetime import datetimae
+import os, sys, subprocess
 
-from editor import EditorApp
+def open_file(filename):
+    if sys.platform == "win32":
+        os.startfile(filename)
+    else:
+        opener ="open" if sys.platform == "darwin" else "xdg-open"
+        subprocess.call([opener, filename])
 
 def load_csv(filepath):
     with open(filepath, newline='') as csvfile:

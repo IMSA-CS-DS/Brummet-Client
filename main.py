@@ -28,6 +28,8 @@ import paramiko
 #import time
 from datetime import datetime
 
+from editor import EditorApp
+
 def load_csv(filepath):
     with open(filepath, newline='') as csvfile:
         file_array = list(csv.reader(csvfile))
@@ -36,6 +38,7 @@ def load_csv(filepath):
 
 class FileTemplate(Button):
 
+    ssh = None
     sftp = None
 
     def changedir(self, path):
@@ -47,6 +50,8 @@ class FileTemplate(Button):
         except:
 
             file = self.sftp.file(path.split(",")[-1], mode = 'w+')
+
+            #EditorApp().build(self.ssh, self.sftp)
 
 class Client(Screen):
 
@@ -92,6 +97,7 @@ class Client(Screen):
 
             template = FileTemplate()
             template.sftp = self.sftp
+            template.ssh = self.ssh
             try:
                 parse = file.split(",")
                 template.ids.filename.text = parse[1]

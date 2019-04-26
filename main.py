@@ -25,7 +25,7 @@ from kivy.clock import Clock
 
 import csv
 import paramiko
-from datetime import datetimae
+from datetime import datetime
 import os, sys, subprocess
 
 def open_file(filename):
@@ -72,7 +72,7 @@ class Client(Screen):
 
         self.sftp.chdir('brummet_projects')
 
-        Clock.schedule_interval(self.auto, 1)
+        Clock.schedule_interval(self.auto, 0.5)
 
     def auto(self, dt):
 

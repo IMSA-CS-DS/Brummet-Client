@@ -25,7 +25,7 @@ from kivy.clock import Clock
 
 import csv
 import paramiko
-from datetime import datetimae
+from datetime import datetime
 import os, sys, subprocess
 
 def open_file(filename):

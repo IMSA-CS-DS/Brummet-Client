@@ -42,21 +42,14 @@ def load_csv(filepath):
     return file_array
 
 class FileTemplate(Button):
-
     ssh = None
     sftp = None
-
     def changedir(self, path):
 
         try:
-
             self.sftp.chdir(path)
-
         except:
-
             file = self.sftp.file(path.split(",")[-1], mode = 'w+')
-
-            #EditorApp().build(self.ssh, self.sftp)
 
 class Client(Screen):
 
